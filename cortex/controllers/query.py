@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from starlette.responses import JSONResponse
+from utils.palace import palace_query
 
-router = APIRouter(prefix="/query", tags=["query"])
-
-@router.post("/")
-def query_item(payload: dict):
-    return {"status": "ok", "results": []}
+async def query_item(request):
+    data = await request.json()
+    text = data.get("text")
+    results = palace_query(text)
+    return JSONResponse({"status": "ok", "results": results})

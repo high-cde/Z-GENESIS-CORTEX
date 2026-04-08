@@ -1,9 +1,16 @@
-from fastapi import FastAPI
-from router import router
+from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.responses import JSONResponse
+from starlette.routing import Mount
+from middleware import RequestLogger
+from router import cortex_routes
 
-app = FastAPI(title="Z‑CORTEX")
-app.include_router(router)
+app = Starlette(
+    debug=True,
+    routes=[Mount("/", routes=cortex_routes)],
+    middleware=[Middleware(RequestLogger)]
+)
 
-@app.get("/")
-def root():
-    return {"status": "Z‑CORTEX online"}
+@app.route("/")
+async def root(request):
+    return JSONResponse({"status": "Z‑CORTEX online"})

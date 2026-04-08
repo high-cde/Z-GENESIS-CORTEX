@@ -1,11 +1,10 @@
-from fastapi import APIRouter
+from starlette.responses import JSONResponse
+from utils.zaaak import encode, decode
 
-router = APIRouter(prefix="/zaaak", tags=["zaaak"])
+async def encode_data(request):
+    data = await request.json()
+    return JSONResponse({"encoded": encode(data.get("text", ""))})
 
-@router.post("/encode")
-def encode(payload: dict):
-    return {"encoded": "TODO"}
-
-@router.post("/decode")
-def decode(payload: dict):
-    return {"decoded": "TODO"}
+async def decode_data(request):
+    data = await request.json()
+    return JSONResponse({"decoded": decode(data.get("blob", ""))})

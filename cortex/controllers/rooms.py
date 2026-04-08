@@ -1,7 +1,4 @@
-from fastapi import APIRouter
+from starlette.responses import JSONResponse
 
-router = APIRouter(prefix="/rooms", tags=["rooms"])
-
-@router.get("/")
-def list_rooms():
-    return {"rooms": []}
+async def list_rooms(request):
+    return JSONResponse({"rooms": ["W1-H1-R1", "W1-H1-R2"]})
