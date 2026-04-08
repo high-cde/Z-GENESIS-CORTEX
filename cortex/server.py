@@ -2,8 +2,9 @@ from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.responses import JSONResponse
 from starlette.routing import Mount
-from middleware import RequestLogger
-from router import cortex_routes
+
+from cortex.middleware import RequestLogger
+from cortex.router import cortex_routes
 
 app = Starlette(
     debug=True,
@@ -13,4 +14,4 @@ app = Starlette(
 
 @app.route("/")
 async def root(request):
-    return JSONResponse({"status": "Z‑CORTEX online"})
+    return JSONResponse({"status": "CORTEX OK"})
